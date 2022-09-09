@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import "./App.css";
+import Header from "./Components/Header";
 
 function App() {
   const [notes, setNotes] = useState(JSON.parse(localStorage.getItem("allNotes")) ||[]);
@@ -18,10 +18,9 @@ function App() {
   }
 
   return (
-    <>
-      <p>{notes.length}</p>
-      <button onClick={addNote}>sub</button>
-    </>
+    <div className="container bg-slate-500 mx-auto">
+      <Header/>
+    </div>
   );
 }
 
