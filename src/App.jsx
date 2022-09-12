@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Header from "./Components/Header";
 
 function App() {
-  const [notes, setNotes] = useState(JSON.parse(localStorage.getItem("allNotes")) ||[]);
+  const [notes, setNotes] = useState(JSON.parse(localStorage.getItem("allNotes")) || []);
 
   useEffect(()=> {
     localStorage.setItem("allNotes", JSON.stringify(notes))
