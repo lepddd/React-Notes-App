@@ -23,7 +23,11 @@ const Note = () => {
         setIsValid(true);
       }, 1000);
     } else {
-      addNote(text); //update store
+      const newNote = {
+        note:text,
+        id:Math.random()+notes.length
+      }
+      addNote(newNote); //update store
       setRemaning(maxLength);
       setText(""); //reset textarea
       setIsValid(true);
@@ -44,7 +48,7 @@ const Note = () => {
         placeholder="Type to add a note..."
       ></textarea>
       <div className="flex justify-between items-center text-zinc-800">
-        <p className="text-sm text-zinc-800">Remaning {remaning}</p>
+        <p className="text-sm text-emerald-700">{remaning} Remaning</p>
         <button
           className="text-xs px-3 py-1 bg-zinc-800 text-neutral-50 rounded"
           onClick={addNotes}

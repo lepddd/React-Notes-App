@@ -7,8 +7,8 @@ let store = (set) => ({
     set((state) => ({
       notes: [
         {
-          id: state.notes.length,
-          note: note,
+          id: note.id,
+          note: note.note,
           date: new Date().toLocaleDateString(),
         },
         ...state.notes,
@@ -16,10 +16,11 @@ let store = (set) => ({
     })),
   deleteNote: (id) => set((state) => ({
     notes: state.notes.filter(note => note.id !== id)
-  }))
+  })),
+  removeAllNotes: () => set((state) => ({notes: []}))
 });
 
-store = persist(store, { name: "Teste-Notes-Persist" });
+store = persist(store, { name: "all-notes" });
 
 const useStore = create(store);
 
