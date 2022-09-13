@@ -1,10 +1,10 @@
-import useNoteStore from "../noteStore";
+import useStore from "../noteStore";
 import AddNote from "./Components/AddNote";
 import Header from "./Components/Header";
 import Note from "./Components/Note";
 
 function App() {
-  const notes = useNoteStore((state) => state.notes);
+  const notes = useStore((state) => state.notes);
 
   return (
     <div className="container mx-auto">

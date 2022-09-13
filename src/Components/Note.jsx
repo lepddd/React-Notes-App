@@ -1,17 +1,13 @@
 import { Icon } from "@iconify/react";
-import useNoteStore from "../../noteStore";
-const Note = ({ date, note, index }) => {
-  const notes = useNoteStore((state) => state.notes);
-  const deleteNotes = useNoteStore((state) => state.updateNotes);
+import useStore from "../../noteStore";
 
-  function deleteNote(id) {
-    const filtered = notes.filter((el) => el.id !== id);
-    deleteNotes(filtered);
-  }
+const Note = ({ date, note, index }) => {
+  const notes = useStore((state) => state.notes);
+  const deleteNote = useStore((state) => state.deleteNote);
 
   return (
     <div className="flex gap-3 flex-col p-3 w-[250px] h-[200px] bg-yellow-200 rounded drop-shadow-md">
-      <p className="bg-yellow-200 w-full h-full text-zinc-800">{note}</p>
+      <p className="bg-yellow-200 w-full h-full text-zinc-800 break-all">{note}</p>
       <div className="flex justify-between items-center text-zinc-800">
         <p className="text-sm text-zinc-800">{date}</p>
         <button onClick={() => deleteNote(index)}>

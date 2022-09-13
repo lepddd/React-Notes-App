@@ -1,15 +1,15 @@
 import { useState } from "react";
-import useNoteStore from "../../noteStore";
+import useStore from "../../noteStore";
+
 const Note = () => {
-  let date = new Date();
-  let maxLength = 100;
+  const maxLength = 100;
 
-  const [remaning, setRemaning] = useState(maxLength);
   const [text, setText] = useState("");
+  const [remaning, setRemaning] = useState(maxLength);
+  const [isValid, setIsValid] = useState(true);
 
-  const [isValid,setIsValid] = useState(true)
-  const notes = useNoteStore((state) => state.notes);
-  const addNote = useNoteStore((state) => state.updateNotes);
+  const notes = useStore((state) => state.notes);
+  const addNote = useStore((state) => state.addNote);
 
   function handleChange(e) {
     setText(e.target.value);
@@ -17,21 +17,16 @@ const Note = () => {
   }
 
   function addNotes() {
-    if(!text){
-      setIsValid(false)
-      setTimeout(()=>{
-        setIsValid(true)
-      },1000)
-    }else{
-      const newNote = {
-        id: notes.length,
-        note: text,
-        date: date.toLocaleDateString(),
-      };
-      addNote([...notes, newNote]); //update store 
-      setIsValid(true)
-      setRemaning(maxLength)
+    if (!text) {
+      setIsValid(false);
+      setTimeout(() => {
+        setIsValid(true);
+      }, 1000);
+    } else {
+      addNote(text); //update store
+      setRemaning(maxLength);
       setText(""); //reset textarea
+      setIsValid(true);
     }
   }
 
@@ -39,7 +34,9 @@ const Note = () => {
     <div className="flex gap-3 flex-col p-3 w-[250px] h-[200px] bg-green-200 rounded drop-shadow-md">
       <textarea
         onChange={(e) => handleChange(e)}
-        className={`resize-none bg-green-200 outline-none border rounded ${isValid?'border-green-200':'border-red-500'}`}
+        className={`resize-none bg-green-200 outline-none border rounded text-zinc-800 ${
+          isValid ? "border-green-200" : "border-red-500"
+        }`}
         value={text}
         maxLength={maxLength}
         cols="30"

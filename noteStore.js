@@ -1,17 +1,26 @@
 import create from "zustand";
-import {persist} from "zustand/middleware"
+import { persist } from "zustand/middleware";
 
-const useNoteStore = create(
-    persist(
-      (set, get) => ({
-        notes: [],
-        updateNotes: (newNotes) => set({ notes: newNotes }),
-      }),
-      {
-        name: 'all-notes', // unique name
-        getStorage: () => localStorage, // (optional) by default, 'localStorage' is used
-      }
-    )
-  )
+let store = (set) => ({
+  notes: [],
+  addNote: (note) =>
+    set((state) => ({
+      notes: [
+        {
+          id: state.notes.length,
+          note: note,
+          date: new Date().toLocaleDateString(),
+        },
+        ...state.notes,
+      ],
+    })),
+  deleteNote: (id) => set((state) => ({
+    notes: state.notes.filter(note => note.id !== id)
+  }))
+});
 
-export default useNoteStore
+store = persist(store, { name: "Teste-Notes-Persist" });
+
+const useStore = create(store);
+
+export default useStore;
