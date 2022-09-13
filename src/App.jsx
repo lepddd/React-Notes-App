@@ -1,25 +1,20 @@
-import { useState, useEffect } from "react";
+import useNoteStore from "../noteStore";
+import AddNote from "./Components/AddNote";
 import Header from "./Components/Header";
+import Note from "./Components/Note";
 
 function App() {
-  const [notes, setNotes] = useState(JSON.parse(localStorage.getItem("allNotes")) || []);
-
-  useEffect(()=> {
-    localStorage.setItem("allNotes", JSON.stringify(notes))
-  },[notes])
-
-  function addNote() {
-    const newNote = {
-      title: "olá",
-      data: "09/09/22",
-    };
-    const updatedNotes = [...notes, newNote]
-    setNotes(updatedNotes);
-  }
+  const notes = useNoteStore((state) => state.notes);
 
   return (
-    <div className="container bg-slate-500 mx-auto">
-      <Header/>
+    <div className="container mx-auto">
+      <Header />
+      <div className=" flex flex-wrap gap-2.5 items-center justify-center md:grid md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
+        {notes.map(({ note, date, id }) => (
+          <Note key={id} note={note} date={date} index={id} />
+        ))}
+        <AddNote />
+      </div>
     </div>
   );
 }
